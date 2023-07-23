@@ -1,0 +1,177 @@
+# calling libraries
+from tkinter import *
+from experta import *
+
+#create inference engine
+class find_diesease(KnowledgeEngine):
+	@DefFacts()
+	def _initial_action(self):
+		gui_form1 = Tk() #user interface
+		gui_form1.title("Medical expert system")
+		lb0 = Label(gui_form1,text="Hi! I am here to help you make your health better.\nFor that you'll have to answer a few questions about your conditions\nDo you feel any of the following symptoms:",bg="#123456", fg="#fff",width="800")
+		lb0.pack()
+###############################################################################
+		lb1 = Label(gui_form1,text="headache")
+		en1 = Entry(gui_form1)
+		lb1.pack()
+		en1.pack()
+###############################################################################
+		lb2 = Label(gui_form1,text="back pain")
+		en2 = Entry(gui_form1)
+		lb2.pack()
+		en2.pack()
+###############################################################################
+		lb3 = Label(gui_form1,text="Chest pain")
+		en3 = Entry(gui_form1)
+		lb3.pack()
+		en3.pack()
+###############################################################################
+		lb4 = Label(gui_form1,text="Cough")
+		en4 = Entry(gui_form1)
+		lb4.pack()
+		en4.pack()
+###############################################################################
+		lb5 = Label(gui_form1,text="fainting")
+		en5 = Entry(gui_form1)
+		lb5.pack()
+		en5.pack()
+###############################################################################
+		lb6 = Label(gui_form1,text="fatigue")
+		en6 = Entry(gui_form1)
+		lb6.pack()
+		en6.pack()
+###############################################################################
+		lb7 = Label(gui_form1,text="sunken eyes")
+		en7 = Entry(gui_form1)
+		lb7.pack()
+		en7.pack()
+###############################################################################
+		lb8 = Label(gui_form1,text="low body temperature")
+		en8 = Entry(gui_form1)
+		lb8.pack()
+		en8.pack()
+###############################################################################
+		lb9 = Label(gui_form1,text="restlessness")
+		en9 = Entry(gui_form1)
+		lb9.pack()
+		en9.pack()
+###############################################################################
+		lb10 = Label(gui_form1,text="sore throat")
+		en10 = Entry(gui_form1)
+		lb10.pack()
+		en10.pack()
+###############################################################################
+		lb11 = Label(gui_form1,text="fever")
+		en11= Entry(gui_form1)
+		lb11.pack()
+		en11.pack()
+###############################################################################
+		lb12 = Label(gui_form1,text="Nausea")
+		en12 = Entry(gui_form1)
+		lb12.pack()
+		en12.pack()
+###############################################################################
+		lb13 = Label(gui_form1,text="blurred_vision")
+		en13 = Entry(gui_form1)
+		lb13.pack()
+		en13.pack()
+##############################################################################
+		def get_values():
+			self.declare(Fact(headache=en1.get()))
+			self.declare(Fact(back_pain=en2.get()))
+			self.declare(Fact(chest_pain=en3.get()))
+			self.declare(Fact(cough=en4.get()))
+			self.declare(Fact(fainting=en5.get()))
+			self.declare(Fact(sore_throat=en6.get()))
+			self.declare(Fact(fatigue=en7.get()))
+			self.declare(Fact(restlessness=en8.get()))
+			self.declare(Fact(low_body_temp=en9.get()))
+			self.declare(Fact(fever=en10.get()))
+			self.declare(Fact(sunken_eyes=en11.get()))
+			self.declare(Fact(nausea=en12.get()))
+			self.declare(Fact(blurred_vision=en13.get()))
+#############################################################################
+		btn = Button(gui_form1,command=get_values,text="get_values",bg="#123456", fg="#fff")
+		btn.pack()
+            
+		gui_form1.mainloop()
+		yield Fact(action="find_disease")
+        
+###################################################################################################
+##################################################################################################
+    #knowlege base
+	@Rule(Fact(action='find_disease'),Fact(headache="no"),Fact(back_pain="no"),Fact(chest_pain="no"),Fact(cough="no"),Fact(fainting="no"),Fact(sore_throat="no"),Fact(fatigue="yes"),Fact(restlessness="no"),Fact(low_body_temp="no"),Fact(fever="yes"),Fact(sunken_eyes="no"),Fact(nausea="yes"),Fact(blurred_vision="no"))
+	def disease_0(self):
+		self.declare(Fact(disease="Jaundice"))
+
+	@Rule(Fact(action='find_disease'),Fact(headache="no"),Fact(back_pain="no"),Fact(chest_pain="no"),Fact(cough="no"),Fact(fainting="no"),Fact(sore_throat="no"),Fact(fatigue="no"),Fact(restlessness="yes"),Fact(low_body_temp="no"),Fact(fever="no"),Fact(sunken_eyes="no"),Fact(nausea="no"),Fact(blurred_vision="no"))
+	def disease_1(self):
+		self.declare(Fact(disease="Alzheimers"))
+
+	@Rule(Fact(action='find_disease'),Fact(headache="no"),Fact(back_pain="yes"),Fact(chest_pain="no"),Fact(cough="no"),Fact(fainting="no"),Fact(sore_throat="no"),Fact(fatigue="yes"),Fact(restlessness="no"),Fact(low_body_temp="no"),Fact(fever="no"),Fact(sunken_eyes="no"),Fact(nausea="no"),Fact(blurred_vision="no"))
+	def disease_2(self):
+		self.declare(Fact(disease="Arthritis"))
+
+	@Rule(Fact(action='find_disease'),Fact(headache="no"),Fact(back_pain="no"),Fact(chest_pain="yes"),Fact(cough="yes"),Fact(fainting="no"),Fact(sore_throat="no"),Fact(fatigue="no"),Fact(restlessness="no"),Fact(low_body_temp="no"),Fact(fever="yes"),Fact(sunken_eyes="no"),Fact(nausea="no"),Fact(blurred_vision="no"))
+	def disease_3(self):
+		self.declare(Fact(disease="Tuberculosis"))
+
+	@Rule(Fact(action='find_disease'),Fact(headache="no"),Fact(back_pain="no"),Fact(chest_pain="yes"),Fact(cough="yes"),Fact(fainting="no"),Fact(sore_throat="no"),Fact(fatigue="no"),Fact(restlessness="yes"),Fact(low_body_temp="no"),Fact(fever="no"),Fact(sunken_eyes="no"),Fact(nausea="no"),Fact(blurred_vision="no"))
+	def disease_4(self):
+		self.declare(Fact(disease="Asthma"))
+
+	@Rule(Fact(action='find_disease'),Fact(headache="yes"),Fact(back_pain="no"),Fact(chest_pain="no"),Fact(cough="yes"),Fact(fainting="no"),Fact(sore_throat="yes"),Fact(fatigue="no"),Fact(restlessness="no"),Fact(low_body_temp="no"),Fact(fever="yes"),Fact(sunken_eyes="no"),Fact(nausea="no"),Fact(blurred_vision="no"))
+	def disease_5(self):
+		self.declare(Fact(disease="Sinusitis"))
+
+	@Rule(Fact(action='find_disease'),Fact(headache="no"),Fact(back_pain="no"),Fact(chest_pain="no"),Fact(cough="no"),Fact(fainting="no"),Fact(sore_throat="no"),Fact(fatigue="yes"),Fact(restlessness="no"),Fact(low_body_temp="no"),Fact(fever="no"),Fact(sunken_eyes="no"),Fact(nausea="no"),Fact(blurred_vision="no"))
+	def disease_6(self):
+		self.declare(Fact(disease="Epilepsy"))
+
+	@Rule(Fact(action='find_disease'),Fact(headache="no"),Fact(back_pain="no"),Fact(chest_pain="yes"),Fact(cough="no"),Fact(fainting="no"),Fact(sore_throat="no"),Fact(fatigue="no"),Fact(restlessness="no"),Fact(low_body_temp="no"),Fact(fever="no"),Fact(sunken_eyes="no"),Fact(nausea="yes"),Fact(blurred_vision="no"))
+	def disease_7(self):
+		self.declare(Fact(disease="Heart Disease"))
+
+	@Rule(Fact(action='find_disease'),Fact(headache="no"),Fact(back_pain="no"),Fact(chest_pain="no"),Fact(cough="no"),Fact(fainting="no"),Fact(sore_throat="no"),Fact(fatigue="yes"),Fact(restlessness="no"),Fact(low_body_temp="no"),Fact(fever="no"),Fact(sunken_eyes="no"),Fact(nausea="yes"),Fact(blurred_vision="yes"))
+	def disease_8(self):
+		self.declare(Fact(disease="Diabetes"))
+
+	@Rule(Fact(action='find_disease'),Fact(headache="yes"),Fact(back_pain="no"),Fact(chest_pain="no"),Fact(cough="no"),Fact(fainting="no"),Fact(sore_throat="no"),Fact(fatigue="no"),Fact(restlessness="no"),Fact(low_body_temp="no"),Fact(fever="no"),Fact(sunken_eyes="no"),Fact(nausea="yes"),Fact(blurred_vision="yes"))
+	def disease_9(self):
+		self.declare(Fact(disease="Glaucoma"))
+
+	@Rule(Fact(action='find_disease'),Fact(headache="no"),Fact(back_pain="no"),Fact(chest_pain="no"),Fact(cough="no"),Fact(fainting="no"),Fact(sore_throat="no"),Fact(fatigue="yes"),Fact(restlessness="no"),Fact(low_body_temp="no"),Fact(fever="no"),Fact(sunken_eyes="no"),Fact(nausea="yes"),Fact(blurred_vision="no"))
+	def disease_10(self):
+		self.declare(Fact(disease="Hyperthyroidism"))
+
+	@Rule(Fact(action='find_disease'),Fact(headache="yes"),Fact(back_pain="no"),Fact(chest_pain="no"),Fact(cough="no"),Fact(fainting="no"),Fact(sore_throat="no"),Fact(fatigue="no"),Fact(restlessness="no"),Fact(low_body_temp="no"),Fact(fever="yes"),Fact(sunken_eyes="no"),Fact(nausea="yes"),Fact(blurred_vision="no"))
+	def disease_11(self):
+		self.declare(Fact(disease="Heat Stroke"))
+
+	@Rule(Fact(action='find_disease'),Fact(headache="no"),Fact(back_pain="no"),Fact(chest_pain="no"),Fact(cough="no"),Fact(fainting="yes"),Fact(sore_throat="no"),Fact(fatigue="no"),Fact(restlessness="no"),Fact(low_body_temp="yes"),Fact(fever="no"),Fact(sunken_eyes="no"),Fact(nausea="no"),Fact(blurred_vision="no"))
+	def disease_12(self):
+		self.declare(Fact(disease="Hypothermia"))
+
+	@Rule(Fact(action='find_disease'),Fact(disease=MATCH.disease))
+	def disease(self, disease):
+		print("")
+		id_disease = disease
+		gui_form2 = Tk()
+		gui_form2.title("Medical expert system answer")
+		lb0 = Label(gui_form2,text="the most probalple diesease is",bg="#123456", fg="#fff",width="800")
+		lb0.pack()
+		var = StringVar()
+		var.set(id_disease)
+		lb1 = Label(gui_form2, textvariable = var,bg="#678954", fg="#fff",width="800")
+		lb1.pack()
+		#print("The most probable disease that you have is %s\n" %(id_disease))
+		gui_form2.mainloop()
+
+#run class
+engine = find_diesease()
+while(1):
+    engine.reset()  # Prepare the engine for the execution.
+    engine.run()  # Run it!
+    print("Would you like to diagnose some other symptoms?")
+    if input() == "no":
+        break;
